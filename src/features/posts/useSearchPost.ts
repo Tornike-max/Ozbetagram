@@ -11,7 +11,7 @@ export function useSearchPost() {
   } = useMutation({
     mutationFn: ({ searchValue }: { searchValue: string }) =>
       searchByCaption(searchValue),
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [`posts`] });
     },
     onError: () => {

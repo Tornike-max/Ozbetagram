@@ -32,7 +32,11 @@ type PostType = {
   user_id: string;
   username: string;
   tags: string;
-  likes: [user_id: string[]];
+  likes: [
+    {
+      user_id: string;
+    }
+  ];
   users: {
     email: string;
     user_id: string;
@@ -51,11 +55,11 @@ export default function Posts() {
   const [name, setName] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [searchParams, setSearchParams] = useSearchParams();
-  const currentPage = searchParams.get("page") || 1;
+  const currentPage = Number(searchParams.get("page")) || 1;
 
   const { userIds, isUsersLoading } = useAllUsers();
 
-  const { posts, isPostsLoading } = useGetAllPosts(userIds);
+  const { posts, isPostsLoading } = useGetAllPosts(userIds || undefined);
 
   isPostsLoading || (isSearching && <Spinner />);
 
@@ -260,16 +264,6 @@ export default function Posts() {
             </div>
 
             <div className="flex justify-between items-center mt-3">
-              <button
-                onClick={(e) => handleEdit(e, post?.id)}
-                className={`flex items-center justify-center border py-1 px-2 rounded-xl hover:rounded-2xl ${
-                  dark
-                    ? "border-indigo-500 bg-slate-50 hover:bg-slate-100 text-indigo-500 hover:text-indigo-600"
-                    : "border-gray-300 bg-gray-50 hover:bg-gray-100 text-gray-600 hover:text-gray-700"
-                } duration-200 transition-all`}
-              >
-                <HiOutlinePencil />
-              </button>
               <div
                 className={`flex items-center gap-1 border py-1 px-2 rounded-xl ${
                   dark
@@ -288,6 +282,18 @@ export default function Posts() {
                   )}
                 </span>
               </div>
+              {user?.id === post.user_id && (
+                <button
+                  onClick={(e) => handleEdit(e, post?.id)}
+                  className={`flex items-center justify-center border py-1 px-2 rounded-xl hover:rounded-2xl ${
+                    dark
+                      ? "border-indigo-500 bg-slate-50 hover:bg-slate-100 text-indigo-500 hover:text-indigo-600"
+                      : "border-gray-300 bg-gray-50 hover:bg-gray-100 text-gray-600 hover:text-gray-700"
+                  } duration-200 transition-all`}
+                >
+                  <HiOutlinePencil />
+                </button>
+              )}
             </div>
           </div>
         ))

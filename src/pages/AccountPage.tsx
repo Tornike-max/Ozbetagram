@@ -73,6 +73,12 @@ export default function AccountPage() {
     onDeleteOpen();
   }
 
+  function handleEdit(e: React.MouseEvent, postId: number) {
+    e.preventDefault();
+    console.log(postId);
+    navigate(`/editPost/${postId}`);
+  }
+
   return (
     <div className="max-w-5xl w-full flex flex-col items-center justify-center font-serif px-2">
       {/* User Information Section */}
@@ -152,7 +158,25 @@ export default function AccountPage() {
       {/* User Posts Section */}
       <div className="w-full border-t-[1px] border-slate-400 rounded-xl mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {post.map((item) => (
-          <div key={item.id} className="relative flex justify-center">
+          <div key={item.id} className="relative">
+            {user?.id === accountId && (
+              <>
+                <button
+                  onClick={(e) => handleEdit(e, item?.id)}
+                  className={
+                    "absolute top-2 left-2 bg-indigo-500 text-white rounded-full p-2 hover:p-[9px] duration-150 transition-all z-10 cursor-pointer"
+                  }
+                >
+                  <HiOutlinePencil />
+                </button>
+                <button
+                  onClick={(e) => handleDeletePost(e, item.id)}
+                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:p-[9px] duration-150 transition-all z-10 cursor-pointer"
+                >
+                  <HiOutlineTrash />
+                </button>
+              </>
+            )}
             {/* Post Image */}
             <ImageModal
               isOpen={isOpen}
@@ -167,14 +191,6 @@ export default function AccountPage() {
               loading="lazy"
               className="cursor-pointer rounded-xl hover:rounded-3xl duration-200 transition-all w-full h-auto sm:w-64 sm:h-56 object-cover"
             />
-            {user?.id === accountId && (
-              <button
-                onClick={(e) => handleDeletePost(e, item.id)}
-                className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-2 hover:p-[9px] duration-150 transition-all z-10 cursor-pointer"
-              >
-                <HiOutlineTrash />
-              </button>
-            )}
           </div>
         ))}
       </div>

@@ -1,6 +1,6 @@
 import { Button, Input } from "@nextui-org/react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { HiOutlineEye, HiOutlineEyeSlash } from "react-icons/hi2";
 import { useEditUser } from "./useEditUser";
 
@@ -22,12 +22,18 @@ export default function EditPassword() {
     getValues,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  function onSubmit(data: UserDataType) {
+  } = useForm<UserDataType>();
+
+  const onSubmit: SubmitHandler<UserDataType> = (data) => {
     if (!data) return;
     const { password } = data;
     editUser({ password, username: "", email: "" });
-  }
+  };
+  // function onSubmit(data: UserDataType) {
+  //   if (!data) return;
+  //   const { password } = data;
+  //   editUser({ password, username: "", email: "" });
+  // }
 
   return (
     <>

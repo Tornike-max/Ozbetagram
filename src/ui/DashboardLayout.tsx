@@ -7,6 +7,20 @@ import { avatarURLs } from "./randomAvatars";
 import SpinnerComponent from "./SpinnerComponent";
 import { useDarkMode } from "../context/useDarkMode";
 
+type UserType = {
+  userId: string;
+  id: number | string;
+  email: string;
+  status: keyof StatusTypes; // Ensure 'status' is one of the keys from StatusTypes
+  avatar: string;
+};
+
+type StatusTypes = {
+  active: string;
+  paused: string;
+  vacation: string;
+};
+
 export default function DashboardLayout() {
   const { data } = useUser();
   const { users: allUsers, userIds, isUsersLoading } = useAllUsers();
@@ -16,16 +30,16 @@ export default function DashboardLayout() {
 
   if (isPostsLoading || isUsersLoading) return <SpinnerComponent />;
 
-  const users = allUsers?.map((user, index) => {
-    const id = Math.floor(Math.random() * 100);
-    return {
-      userId: user.id,
-      id: id,
-      email: user?.email,
-      status: user?.id === data?.id ? "active" : "paused",
-      avatar: avatarURLs[index],
-    };
-  });
+  const users: UserType[] =
+    allUsers?.map((user, index) => {
+      return {
+        userId: user.id,
+        id: Math.floor(Math.random() * 100),
+        email: user?.email,
+        status: user?.id === data?.id ? "active" : "paused", // Ensure 'status' matches keys in StatusTypes
+        avatar: avatarURLs[index],
+      };
+    }) ?? [];
 
   const columns = [
     { name: "NAME", uid: "name" },

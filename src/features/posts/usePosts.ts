@@ -13,5 +13,5 @@ export function usePosts() {
     throw new Error(error.message);
   }
 
-  return { data: data?.data, isPending };
+  return { data: data, isPending };
 }

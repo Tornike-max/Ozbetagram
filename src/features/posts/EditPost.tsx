@@ -5,25 +5,33 @@ import { useDropzone, DropzoneOptions } from "react-dropzone";
 import { HiOutlinePhoto } from "react-icons/hi2";
 import { useUser } from "../users/useUser";
 import { useEditPost } from "./useEditPost";
-import { createPost } from "../../services/apiPosts";
-
-interface FormData {
-  files: File[];
-}
-
-type PostType = {
-  post: object;
-};
+// import { createPost } from "../../services/apiPosts";
 
 type FormTypes = {
   caption: string;
   file: File[];
   location: string;
   tags: string;
-  image: string;
+  image: File | string;
   user_id?: string;
+  files: File[];
 };
+
+type PostType = {
+  post: FormTypes;
+};
+
+// interface FormData {
+//   files: File[] | string[] | string;
+//   location: string;
+//   tags: string;
+//   image: File[] | string;
+//   user_id?: string;
+//   caption: string;
+// }
+
 export default function EditPost({ post }: PostType) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { editPost, isEditing } = useEditPost();
   const {
     register,
@@ -33,7 +41,7 @@ export default function EditPost({ post }: PostType) {
     watch,
   } = useForm<FormTypes>({
     defaultValues: {
-      caption: post ? post.caption : "",
+      caption: post ? post?.caption : "",
       location: post ? post.location : "",
       tags: post ? post.tags : "",
       user_id: post ? post.user_id : "",
@@ -54,11 +62,11 @@ export default function EditPost({ post }: PostType) {
     },
   });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
+  const onSubmit: SubmitHandler<FormTypes> = (data) => {
     if (!data) return;
-    let image;
-    if (data.files) {
-      image = data.files[0];
+    let image: string | File | File[];
+    if (data.file) {
+      image = data?.file[0];
     } else {
       image = data?.image;
     }
@@ -72,8 +80,8 @@ export default function EditPost({ post }: PostType) {
       image: image,
       user_id: currentUser?.id,
     };
-
-    createPost({ ...newPost, image: image });
+    console.log({ ...newPost, image: image });
+    // createPost({ ...newPost, image: image });
   };
 
   const files = watch("files");
@@ -106,7 +114,7 @@ export default function EditPost({ post }: PostType) {
         {isDragActive ? (
           <div>
             {files.map((file) => (
-              <span>{file && file.name}</span>
+              <span>{file && file?.name}</span>
             ))}
           </div>
         ) : (

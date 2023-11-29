@@ -45,17 +45,16 @@ export async function signup({
     }
 
     if (user) {
-      // Insert user data into a table (e.g., "profiles")
       const { data: userData, error: userDataError } = await supabase
-        .from("user") // Replace "profiles" with your actual table name
-        .insert([{ username, user_id: user?.id }]) // Assuming you want to store username and user_id in the table
-        .single(); // Assuming you're inserting a single row
+        .from("user")
+        .insert([{ username, user_id: user?.user?.id }])
+        .single();
 
       if (userDataError) {
         throw new Error(userDataError.message);
       }
 
-      return userData; // Return inserted user data
+      return userData;
     }
   } catch (error) {
     console.log(error);
@@ -99,7 +98,7 @@ export async function editUser({
 }: {
   email: string;
   username: string;
-  password: string;
+  password?: string;
 }) {
   let query;
   if (!password) {
@@ -129,13 +128,12 @@ export async function deleteUser(userId: string) {
       throw new Error(`Error in users table: ${error.message}`);
     }
 
-    const { error: deleteError } = await supabase.auth.updateUser({
-      id: userId,
-      data: { status: "deactivated" },
+    const { error: updateError } = await supabase.auth.updateUser({
+      data: { status: "deactivated", id: userId },
     });
 
-    if (deleteError) {
-      throw new Error(`Error in auth users: ${deleteError.message}`);
+    if (updateError) {
+      throw new Error(`Error in auth users: ${updateError.message}`);
     }
   } catch (err) {
     throw new Error("Failed to delete user(s).");

@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { getSinglePost } from "../../services/apiPosts";
 
-export function useSingleUserPost(accountId: number) {
-  console.log(accountId);
+export function useSingleUserPost(postId: number | string | undefined) {
+  console.log(postId);
   const { data: singlePost, isPending: isGettingSinglePost } = useQuery({
-    queryKey: ["usersPost", accountId],
-    queryFn: () => getSinglePost(accountId),
+    queryKey: ["usersPost", postId],
+    queryFn: () => getSinglePost(postId),
   });
 
   return { singlePost, isGettingSinglePost };

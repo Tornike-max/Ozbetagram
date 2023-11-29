@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 type PostType = {
   caption: string;
+  image: File | string;
   location: string;
   tags: string;
-  image: string;
   user_id: string;
   username: string;
 };
@@ -23,7 +23,7 @@ export function useCreatePost() {
       postId,
     }: {
       postDetails: PostType;
-      postId: number;
+      postId: number | string | undefined;
     }) => createPostApi({ postDetails, postId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });

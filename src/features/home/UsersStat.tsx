@@ -42,11 +42,17 @@ declare module "@nextui-org/react" {
 
 type UserType = {
   userId: string;
-  id: number;
+  id: number | string;
   email: string;
   status: keyof StatusTypes; // Update status to accept only keys of StatusTypes
   avatar: string;
 };
+
+// userId: user.id,
+// id: Math.floor(Math.random() * 100),
+// email: user?.email,
+// status: user?.id === data?.id ? "active" : "paused",
+// avatar: avatarURLs[index],
 
 type StatusTypes = {
   active: string;
@@ -64,7 +70,7 @@ export default function UserStat({
   users,
   columns,
 }: {
-  users: UserType;
+  users: UserType[] | undefined;
   columns: ColumnType[];
 }) {
   const { dark } = useDarkMode();
@@ -197,7 +203,7 @@ export default function UserStat({
         }}
       >
         {(item) => (
-          <TableRow key={item.userId}>
+          <TableRow key={item?.userId}>
             {columns.map((column) => (
               <TableCell
                 key={column.uid}

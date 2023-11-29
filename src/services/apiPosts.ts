@@ -27,39 +27,59 @@ export async function getPost(user_id: string) {
 
   return data;
 }
-
 interface Post {
   caption: string;
+  image: File | string;
   location: string;
   tags: string;
-  image: {
-    name: string;
-  };
   user_id: string;
   username: string;
 }
+
 export async function createPost({
   postDetails,
   postId,
 }: {
   postDetails: Post;
-  postId: number;
+  postId: number | string | undefined;
 }) {
-  const isAlreadyImage =
-    postDetails?.image === "string"
-      ? postDetails.image
-      : postDetails?.image?.name;
-  const randomImageName = `${Math.random()}-${isAlreadyImage || ""}`;
+  console.log(postDetails);
+  let path;
+  // typeof postDetails.image === "string"
+  //   ? postDetails.image
+  //   : postDetails?.image?.name;
 
-  const imagePath = randomImageName.replace(/\//g, "");
+  if (typeof postDetails.image === "string") {
+    console.log("already have image");
+    path = postDetails.image;
+  } else {
+    console.log("create new image");
+    path = postDetails?.image?.name;
+  }
+
+  const randomImageName =
+    typeof postDetails.image === "string"
+      ? postDetails.image
+      : `${Math.random()}-${path}`;
+
+  const imagePath =
+    typeof postDetails.image === "string"
+      ? postDetails.image
+      : randomImageName.replace(/\//g, "");
 
   let query = supabase.from("posts");
 
-  const imageUrl = `${supabaseUrl}/storage/v1/object/public/postImages/${imagePath}`;
+  const imageUrl =
+    typeof postDetails.image === "string"
+      ? postDetails.image
+      : `${supabaseUrl}/storage/v1/object/public/postImages/${imagePath}`;
 
   if (postId) {
     query = query
-      .update({ ...postDetails, image: imageUrl })
+      .update({
+        ...postDetails,
+        image: imageUrl,
+      })
       .eq("id", postId)
       .select("*")
       .single();
@@ -150,11 +170,11 @@ export async function likedPost(
   return data;
 }
 
-export async function getSinglePost(accountId: number) {
+export async function getSinglePost(postId: number | string | undefined) {
   const { data, error } = await supabase
     .from("posts")
     .select("*,users(*)")
-    .eq("id", accountId)
+    .eq("id", postId)
     .single();
 
   if (error) {

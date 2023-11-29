@@ -1,9 +1,10 @@
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useUser } from "../users/useUser";
-import { HiOutlinePhoto } from "react-icons/hi2";
+import { HiOutlineArrowLeft, HiOutlinePhoto } from "react-icons/hi2";
 import { Button } from "@nextui-org/button";
 import { useCreatePost } from "./useCretePost";
+import { useNavigate } from "react-router-dom";
 
 type FormData = {
   caption: string;
@@ -18,10 +19,11 @@ export default function CreatePost({
   post,
   postId,
 }: {
-  post: Partial<FormData>;
-  postId: number | string;
+  post?: Partial<FormData>;
+  postId?: number | string | undefined;
 }) {
   const { createPost, isCreatingPost } = useCreatePost();
+  const navigate = useNavigate();
 
   const {
     register,
@@ -55,8 +57,10 @@ export default function CreatePost({
   const onSubmit: SubmitHandler<FormData> = (data) => {
     let image;
     if (data.files) {
+      console.log("create image");
       image = data?.files[0];
     } else {
+      console.log("have image");
       image = data.image;
     }
 
@@ -65,10 +69,11 @@ export default function CreatePost({
       tags: data.tags,
       location: data.location,
       image: image,
-      user_id: currentUser?.id || "", // Consider handling undefined for currentUser?.id
-      username: currentUser?.user_metadata.username || "", // Consider handling undefined for username
+      user_id: currentUser?.id || "",
+      username: currentUser?.user_metadata.username || "",
     };
-
+    console.log("here");
+    console.log({ postDetails, postId });
     createPost({ postDetails, postId });
   };
 
@@ -78,9 +83,23 @@ export default function CreatePost({
       onSubmit={handleSubmit(onSubmit)}
       className="flex flex-col gap-4 max-w-[500px] w-full"
     >
-      <h1 className="text-2xl font-bold text-indigo-500 font-serif">
-        {post ? "Edit Post" : "Create Post"}
-      </h1>
+      <div className="flex justify-between items-center">
+        <Button
+          onClick={() => navigate(-1)}
+          color="default"
+          type="button"
+          variant="ghost"
+        >
+          <span>
+            <HiOutlineArrowLeft />
+          </span>
+          Go Back
+        </Button>
+        <h1 className="text-2xl font-bold text-indigo-500 font-serif">
+          {post ? "Edit Post" : "Create Post"}
+        </h1>
+      </div>
+
       <div className="flex flex-col">
         <label className="text-slate-600 font-medium mb-1">Caption</label>
         <textarea

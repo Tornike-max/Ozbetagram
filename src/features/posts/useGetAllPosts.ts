@@ -8,8 +8,10 @@ export function useGetAllPosts(userIds: string[] | undefined) {
   const { data: posts, isPending: isPostsLoading } = useQuery({
     queryKey: ["posts", "page", Number(page)],
     queryFn: () =>
-      userIds ? getAllPosts(userIds, Number(page)) : Promise.resolve([]),
-    enabled: !!userIds, // Only trigger the query when userIds are available
+      userIds
+        ? getAllPosts(userIds, Number(page))
+        : Promise.resolve({ data: [], count: null }),
+    enabled: !!userIds,
   });
 
   return { posts, isPostsLoading };
