@@ -31,8 +31,7 @@ type PostType = {
 // }
 
 export default function EditPost({ post }: PostType) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { editPost, isEditing } = useEditPost();
+  const { isEditing } = useEditPost();
   const {
     register,
     handleSubmit,

@@ -27,14 +27,14 @@ export async function getPost(user_id: string) {
 
   return data;
 }
-interface Post {
+type Post = {
   caption: string;
   image: File | string;
   location: string;
   tags: string;
   user_id: string;
   username: string;
-}
+};
 
 export async function createPost({
   postDetails,
@@ -67,7 +67,7 @@ export async function createPost({
       ? postDetails.image
       : randomImageName.replace(/\//g, "");
 
-  let query = supabase.from("posts");
+  // const query = supabase.from("posts");
 
   const imageUrl =
     typeof postDetails.image === "string"
@@ -75,7 +75,8 @@ export async function createPost({
       : `${supabaseUrl}/storage/v1/object/public/postImages/${imagePath}`;
 
   if (postId) {
-    query = query
+    const { data, error } = await supabase
+      .from("posts")
       .update({
         ...postDetails,
         image: imageUrl,
@@ -83,8 +84,21 @@ export async function createPost({
       .eq("id", postId)
       .select("*")
       .single();
+
+    if (error) throw new Error(error.message);
+    const { error: storageError } = await supabase.storage
+      .from("postImages")
+      .upload(imagePath, postDetails?.image);
+
+    if (storageError) {
+      console.log("Error while uploading");
+      throw new Error(storageError.message);
+    }
+
+    return data;
   } else {
-    query = query
+    const { data, error } = await supabase
+      .from("posts")
       .insert([
         {
           ...postDetails,
@@ -93,22 +107,18 @@ export async function createPost({
       ])
       .select()
       .single();
+
+    if (error) throw new Error(error.message);
+    const { error: storageError } = await supabase.storage
+      .from("postImages")
+      .upload(imagePath, postDetails?.image);
+
+    if (storageError) {
+      console.log("Error while uploading");
+      throw new Error(storageError.message);
+    }
+    return data;
   }
-
-  const { data, error } = await query.select().single();
-
-  if (error) throw new Error(error.message);
-
-  const { error: storageError } = await supabase.storage
-    .from("postImages")
-    .upload(imagePath, postDetails?.image);
-
-  if (storageError) {
-    console.log("Error while uploading");
-    throw new Error(storageError.message);
-  }
-
-  return data;
 }
 
 export async function getAllPosts(userIds: string[], page: number) {
