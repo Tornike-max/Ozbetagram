@@ -19,17 +19,22 @@ export default function ImageModal({
   name: string;
 }) {
   return (
-    <>
-      <Modal size="lg" backdrop="blur" isOpen={isOpen} onClose={onClose}>
-        <ModalContent>
+    <div className="flex justify-center items-center">
+      <Modal
+        className="w-96 sm:w-[550px] md:w-[950px]"
+        backdrop="blur"
+        isOpen={isOpen}
+        onClose={onClose}
+      >
+        <ModalContent className="m-auto">
           <ModalHeader>{name}</ModalHeader>
           <ModalBody>
-            <div className="flex justify-center">
+            <div className="flex justify-center items-center">
               <img src={image} alt="image" className="max-w-full h-auto" />
             </div>
           </ModalBody>
           <ModalFooter>
-            <div className="flex justify-end">
+            <div className="flex justify-center items-center">
               <Button color="danger" variant="light" onClick={onClose}>
                 Close
               </Button>
@@ -37,6 +42,6 @@ export default function ImageModal({
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </>
+    </div>
   );
 }

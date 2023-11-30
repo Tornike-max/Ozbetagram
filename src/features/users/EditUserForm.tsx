@@ -16,8 +16,7 @@ export default function EditUserForm({ username }: { username: string }) {
   const navigate = useNavigate();
   const { data: user } = useUser();
   const { editUser, isEditingUser } = useEditUser();
-  const { data, isPending } = useGetSinglePost(user?.id || "");
-  console.log(data);
+  const { isPending } = useGetSinglePost(user?.id || "");
   const {
     register,
     handleSubmit,
@@ -36,11 +35,6 @@ export default function EditUserForm({ username }: { username: string }) {
     const { email, username } = data;
     editUser({ email, username });
   };
-  // function onSubmit(data: UserDataType) {
-  //   if (!data) return;
-  //   const { email, username } = data;
-  //   editUser({ email, username });
-  // };
 
   const hasUsernameError = !!errors.username;
   return (

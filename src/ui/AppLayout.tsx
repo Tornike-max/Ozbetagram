@@ -10,7 +10,7 @@ export default function AppLayout() {
     <div
       className={`min-h-screen grid grid-cols-1 gap-4 sm:grid-cols-3 font-serif bg-slate-950 `}
     >
-      <header className="fixed top-0 w-full sm:hidden bg-slate-950 p-2  col-span-3">
+      <header className="fixed top-0 w-full z-50 sm:hidden bg-slate-950 p-2  col-span-3">
         <Header />
       </header>
       <aside className="sticky hidden sm:flex top-0 h-screen bg-slate-950 p-4">
