@@ -2,6 +2,7 @@ import { Button, Input, Spinner, useDisclosure } from "@nextui-org/react";
 import { useGetAllPosts } from "./useGetAllPosts";
 import { useAllUsers } from "../users/useAllUsers";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+// import { useMemo } from "react";
 
 import {
   HiHeart,
@@ -142,15 +143,6 @@ export default function Posts() {
 
   return (
     <div className="flex flex-col items-center justify-center mx-8 gap-4">
-      <div className="flex justify-start items-center flex-col cursor-pointer">
-        <img
-          src={`${dark ? "/logo.png" : "/logo-black.png"}`}
-          className={`font-bold ${
-            dark ? "bg-gray-800 px-2 py-2" : ""
-          } w-80 h-20 rounded-2xl duration-200 transition-all`}
-        />
-      </div>
-
       <form className="flex items-center justify-center gap-2">
         <Input
           label="Search"
