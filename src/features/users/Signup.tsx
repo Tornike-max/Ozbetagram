@@ -37,17 +37,13 @@ export default function Signup() {
     });
   };
   return (
-    <div className="flex flex-col items-center py-8 h-screen bg-slate-100">
-      <div className="flex justify-center items-center m-auto pb-4">
-        <img
-          src="/logo-black.png"
-          className="text-center text-indigo-600 font-bold w-72 h-24 rounded-2xl"
-          alt="Logo"
-        />
+    <div className="flex flex-col items-center py-8 w-5xl h-screen">
+      <div className="flex justify-center items-center m-auto bg-indigo-600 rounded-lg py-2 px-3 my-2">
+        <h1 className="text-5xl text-slate-100 font-serif">OzGram</h1>
       </div>
       <div className="flex justify-center items-center">
         <form
-          className="max-w-full sm:max-w-[300px] md:max-w-[400px] w-full space-y-2 bg-white rounded-lg py-4 px-6"
+          className="w-full sm:max-w-[300px] md:max-w-[400px] space-y-2 bg-white rounded-lg py-4 px-6"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="text-center border-b-[1px] border-indigo-600">

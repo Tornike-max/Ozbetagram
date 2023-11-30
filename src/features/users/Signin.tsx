@@ -31,11 +31,8 @@ export default function Signin() {
 
   return (
     <div className="flex flex-col items-center py-24 sm:px-10 h-screen bg-slate-100">
-      <div className="flex justify-center items-center m-auto">
-        <img
-          src="/logo-black.png"
-          className="text-center text-indigo-600 font-bold w-72 h-24  rounded-2xl"
-        />
+      <div className="flex justify-center items-center m-auto bg-indigo-600 rounded-lg py-2 px-3 my-2">
+        <h1 className="text-5xl text-slate-100 font-serif">OzGram</h1>
       </div>
       <div className="flex justify-center items-center rounded-2xl">
         <form
