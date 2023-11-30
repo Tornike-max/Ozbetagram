@@ -21,7 +21,7 @@ export default function ImageModal({
   return (
     <div className="flex justify-center items-center">
       <Modal
-        className="w-96 sm:w-[550px] md:w-[950px]"
+        className="w-96 sm:w-[400px] md:w-[650px]"
         backdrop="blur"
         isOpen={isOpen}
         onClose={onClose}
@@ -30,7 +30,11 @@ export default function ImageModal({
           <ModalHeader>{name}</ModalHeader>
           <ModalBody>
             <div className="flex justify-center items-center">
-              <img src={image} alt="image" className="max-w-full h-auto" />
+              <img
+                src={image}
+                alt="image"
+                className="w-72 h-80 sm:w-80 md:w-96 rounded-md"
+              />
             </div>
           </ModalBody>
           <ModalFooter>

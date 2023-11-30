@@ -158,7 +158,8 @@ export default function Posts() {
           type="search"
           value={searchVal}
           onChange={(e) => handleSearch(e, e.target.value)}
-          radius="lg"
+          radius="md"
+          className="text-xs"
           classNames={{
             label: "text-black/50 dark:text-white/90",
             input: [
@@ -202,20 +203,20 @@ export default function Posts() {
               className="flex items-start gap-4 pb-2"
             >
               <span
-                className={`${getRandomColorClass()} text-slate-100 rounded-full flex-shrink-0 w-12 h-12 flex items-center justify-center`}
+                className={`${getRandomColorClass()} text-slate-100 rounded-full flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center`}
               >
                 {post?.username?.split(" ").map((item: string) => item[0])}
               </span>
               <div className="flex flex-col">
                 <span
-                  className={`text-base font-semibold ${
+                  className={`text-sm font-semibold sm:text-base ${
                     dark ? "text-slate-200" : "text-slate-800"
                   }`}
                 >
                   {post?.username}
                 </span>
                 <span
-                  className={`text-sm ${
+                  className={`text-xs sm:text-sm ${
                     dark ? "text-slate-300" : "text-slate-700"
                   }`}
                 >

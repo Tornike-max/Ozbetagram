@@ -189,7 +189,7 @@ export default function AccountPage() {
               src={item.image}
               alt="Post image"
               loading="lazy"
-              className="cursor-pointer rounded-xl hover:rounded-3xl duration-200 transition-all w-full h-auto sm:w-64 sm:h-56 object-cover"
+              className="cursor-pointer rounded-xl hover:rounded-3xl duration-200 transition-all w-full h-96 sm:w-64 sm:h-56 object-cover"
             />
           </div>
         ))}

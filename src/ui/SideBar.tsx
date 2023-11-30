@@ -22,10 +22,10 @@ export default function SideBar() {
 
   return (
     <nav className="p-4">
-      <ul className="flex flex-col items-start justify-center gap-8 ">
+      <ul className="flex flex-col items-start justify-center gap-6 ">
         <Link
           to={`/`}
-          className="text-slate-50 font-semibold text-lg md:text-2xl cursor-pointer py-2 px-4 "
+          className="text-slate-50 font-semibold text-base md:text-lg lg:text-xl cursor-pointer px-4 py-2 "
         >
           <li className="flex items-center gap-4">
             <img
@@ -34,7 +34,7 @@ export default function SideBar() {
             />
           </li>
         </Link>
-        <li className="text-slate-50 font-semibold text-lg md:text-2xl cursor-pointer py-2 px-4">
+        <li className="text-slate-50 font-semibold text-base md:text-lg lg:text-xl cursor-pointer px-4">
           <Switch
             defaultSelected={false}
             size="lg"
@@ -47,16 +47,11 @@ export default function SideBar() {
                 <HiOutlineMoon className={className} />
               )
             }
-          >
-            <span className="text-slate-50 text-medium md:text-xl">
-              {" "}
-              Dark Mode
-            </span>
-          </Switch>
+          ></Switch>
         </li>
         <Link
           to={`/account/${data?.id}`}
-          className={`text-slate-50 font-semibold text-lg md:text-2xl cursor-pointer hover:bg-indigo-500 ${
+          className={`text-slate-50 font-semibold text-base md:text-lg lg:text-xl cursor-pointerr:bg-indigo-500 ${
             pathname === `/account/${data?.id}` && "bg-indigo-500"
           } py-2 px-4 rounded-md transition-all duration-150`}
         >
@@ -69,7 +64,7 @@ export default function SideBar() {
         </Link>
         <Link
           to={`/`}
-          className={`text-slate-50  font-semibold text-lg md:text-2xl cursor-pointer hover:bg-indigo-500 ${
+          className={`text-slate-50  font-semibold text-base md:text-lg lg:text-xl cursor-pointerr:bg-indigo-500 ${
             pathname === "/" && "bg-indigo-500"
           } py-2 px-4 rounded-md transition-all duration-150`}
         >
@@ -82,7 +77,7 @@ export default function SideBar() {
         </Link>
         <Link
           to="/posts"
-          className={`text-slate-50  font-semibold text-lg md:text-2xl cursor-pointer hover:bg-indigo-500 ${
+          className={`text-slate-50  font-semibold text-base md:text-lg lg:text-xl cursor-pointerr:bg-indigo-500 ${
             pathname === "/posts" && "bg-indigo-500"
           } py-2 px-4 rounded-md transition-all duration-150`}
         >
@@ -95,7 +90,7 @@ export default function SideBar() {
         </Link>
         <Link
           to="/users"
-          className={`text-slate-50  font-semibold text-lg md:text-2xl cursor-pointer hover:bg-indigo-500 ${
+          className={`text-slate-50  font-semibold text-base md:text-lg lg:text-xl cursor-pointerr:bg-indigo-500 ${
             pathname === "/users" && "bg-indigo-500"
           } py-2 px-4 rounded-md transition-all duration-150`}
         >
@@ -109,7 +104,7 @@ export default function SideBar() {
 
         <Link
           to="/createPost"
-          className={`text-slate-50  font-semibold text-lg md:text-2xl cursor-pointer hover:bg-indigo-500 ${
+          className={`text-slate-50  font-semibold text-base md:text-lg lg:text-xl cursor-pointerr:bg-indigo-500 ${
             pathname === "/createPost" && "bg-indigo-500"
           } py-2 px-4 rounded-md transition-all duration-150`}
         >
@@ -120,7 +115,7 @@ export default function SideBar() {
             <span>Create Post</span>
           </li>
         </Link>
-        <li className="text-red-500 hover:text-slate-50 font-semibold text-lg md:text-2xl  cursor-pointer hover:bg-red-500 py-2 px-4 rounded-md transition-all duration-150">
+        <li className="text-red-500 hover:text-slate-50 font-semibold text-base md:text-lg lg:text-xl  cursor-pointeer:bg-red-500 py-2 px-4 rounded-md transition-all duration-150">
           <button onClick={() => logout()} className="flex items-center gap-4">
             <span>
               <HiOutlineArrowRightOnRectangle />
